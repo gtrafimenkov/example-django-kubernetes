@@ -1,0 +1,35 @@
+# Default values for cph-test.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+image:
+  # docker repository must be specified at build time
+  # repository: XXX
+  pullPolicy: Always
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+# Environment variables for the application container
+envApp:
+  - name: DJANGO_DEBUG
+    value: "1"
+  - name: CPHTEST_ENVIRONMENT
+    value: "k8s"
+  - name: DB_HOST
+    value: cph-test-db-postgresql.default.svc.cluster.local
+
+# Environment variables for the DB migration container
+envMigrateDB:
+  - name: CPHTEST_ENVIRONMENT
+    value: "k8s"
+  - name: DB_HOST
+    value: cph-test-db-postgresql.default.svc.cluster.local
+
+service:
+  enabled: true
+  type: LoadBalancer
+  port: 80

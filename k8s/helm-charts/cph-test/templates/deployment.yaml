@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "cph-test.fullname" . }}
+  labels:
+    {{- include "cph-test.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "cph-test.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "cph-test.selectorLabels" . | nindent 8 }}
+    spec:
+    {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      containers:
+        - name: nginx
+          image: "{{ .Values.image.repository }}:{{ .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+          args:
+            - nginx
+          livenessProbe:
+            httpGet:
+              path: /static/css/styles.css
+              port: 8080
+          readinessProbe:
+            httpGet:
+              path: /static/css/styles.css
+              port: 8080
+        - name: app
+          image: "{{ .Values.image.repository }}:{{ .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: 8081
+              protocol: TCP
+          args:
+            - app
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 8081
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 8081
+          {{- with .Values.envApp }}
+          env:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+      restartPolicy: Always

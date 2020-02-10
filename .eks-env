@@ -1,0 +1,7 @@
+# Environment variables in case AWS EKS cluster is used.
+# Apply settings with `. .eks-env`
+# Fetch kubeconfig with `make k8s-eks-get-config`
+
+export AWS_REGION=eu-central-1
+export EKS_CLUSTER=cph-test
+export KUBECONFIG=~/.kube/eks.$EKS_CLUSTER

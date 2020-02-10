@@ -1,0 +1,5 @@
+Use `make k8s-app-portforward` and open http://localhost:8080 to access the application.
+
+Use `make k8s-app-create-superuser` to create a Django superuser on the fresh install.
+
+Use `make k8s-app-get-loadbalancer-url` to get loadbalancer URL of the application.

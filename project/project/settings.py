@@ -3,7 +3,10 @@ import os
 
 from django.contrib.messages import constants as message_constants
 
-DEBUG = False
+def get_debug_settings():
+    return os.environ.get("DJANGO_DEBUG", "").lower() in ["true", "1", "yes", "y"]
+
+DEBUG = get_debug_settings()
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
@@ -65,7 +68,7 @@ INSTALLED_APPS = (
 
 STATIC_URL = "/static/"
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "project", "static")]
-STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
 # Uploaded media
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
@@ -73,12 +76,6 @@ MEDIA_URL = "/media/"
 
 # Without this, uploaded files > 4MB end up with perm 0600, unreadable by web server process
 FILE_UPLOAD_PERMISSIONS = 0o644
-
-# ######################
-# Override in local.py :
-# ######################
-
-SECRET_KEY = ""
 
 TEMPLATES = [
     {
@@ -101,17 +98,53 @@ TEMPLATES = [
     }
 ]
 
-
 # Override CSS class for the ERROR tag level to match Bootstrap class name
 MESSAGE_TAGS = {message_constants.ERROR: "danger"}
 
-# Override in local.py
-DATABASES = {}
+####################################################################
+# Environment specific settings
+####################################################################
 
-# Todo-specific settings
-# TODO_STAFF_ONLY = False
-# TODO_DEFAULT_LIST_ID = None
-# TODO_DEFAULT_ASSIGNEE = None
-# TODO_PUBLIC_SUBMIT_REDIRECT = '/'
-# TODO_ALLOW_FILE_ATTACHMENTS = True
-# TODO_LIMIT_FILE_ATTACHMENTS = [".jpg", ".gif", ".png", ".csv", ".pdf"]
+SECRET_KEY = os.environ.get('SECRET_KEY', 'lksdf98wrhkjs88dsf8-324ksdm')
+
+# DEBUG = True
+ALLOWED_HOSTS = ["*"]
+
+def get_db_settings():
+    CPHTEST_ENVIRONMENT = os.environ.get('CPHTEST_ENVIRONMENT', 'local')
+
+    if CPHTEST_ENVIRONMENT == "local":
+        return {
+            'default': {
+                'ENGINE': 'django.db.backends.sqlite3',
+                'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+            }
+        }
+
+    if CPHTEST_ENVIRONMENT == "k8s":
+        return {
+            'default': {
+                'ENGINE':   os.environ.get('DB_ENGINE',   'django.db.backends.postgresql'),
+                'NAME':     os.environ.get('DB_NAME',     'cphtest'),
+                'USER':     os.environ.get('DB_USER',     'cphtestuser'),
+                'PASSWORD': os.environ.get('DB_PASSWORD', 'django'),
+                'HOST':     os.environ.get('DB_HOST',     'p1-postgresql.default.svc.cluster.local'),
+                'PORT':     os.environ.get('DB_PORT',     ''),
+            },
+        }
+
+    return {}
+
+DATABASES = get_db_settings()
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# TODO-specific settings
+TODO_STAFF_ONLY = False
+TODO_DEFAULT_LIST_SLUG = 'tickets'
+TODO_DEFAULT_ASSIGNEE = None
+TODO_PUBLIC_SUBMIT_REDIRECT = '/'
+
+####################################################################
+#
+####################################################################

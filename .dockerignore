@@ -1,0 +1,11 @@
+.git*
+/.dockerignore
+/.eks-env*
+/.vscode
+/build
+/docker/Dockerfile*
+/infra
+/k8s
+/Makefile
+/project/db.sqlite3
+/readme.md

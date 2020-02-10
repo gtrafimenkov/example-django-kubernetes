@@ -1,0 +1,23 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ include "cph-test.fullname" . }}-migrate-db-{{ .Chart.AppVersion }}-{{ randAlphaNum 10 | lower }}
+  labels:
+    {{- include "cph-test.labels" . | nindent 4 }}
+spec:
+  template:
+    metadata:
+      labels:
+        {{- include "cph-test.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+        - name: worker
+          image: "{{ .Values.image.repository }}:{{ .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          args:
+            - migrate
+          {{- with .Values.envMigrateDB }}
+          env:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+      restartPolicy: Never
