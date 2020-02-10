@@ -4,20 +4,20 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-django = "*"
 django-extensions = "*"
 "psycopg2-binary" = "*"
-"flake8" = "*"
+gunicorn = "*"
 factory-boy = "*"
 titlecase = "*"
 bleach = "*"
-django-autocomplete-light = "*"
-html2text = "*"
+django = "==2.2.3"
 
 [dev-packages]
-mypy = "*"
+pylint = "*"
+"flake8" = "*"
 pytest = "*"
 pytest-django = "*"
+mypy = "*"
 
 [requires]
 python_version = "3.6"
