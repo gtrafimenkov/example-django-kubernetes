@@ -12,6 +12,8 @@
 	- [Upgrade of the deployed chart](#upgrade-of-the-deployed-chart)
 - [Deploy AWS EKS test cluster](#deploy-aws-eks-test-cluster)
 - [Final works](#final-works)
+	- [Remove deployed applications](#remove-deployed-applications)
+	- [Remove deployed infrastructure](#remove-deployed-infrastructure)
 
 ## Overview
 
@@ -152,11 +154,21 @@ Here are instructions for deploying a simple EKS cluster.
    kubectl get nodes
    ```
 
-## Final works
+## Final words
 
-Don't forget to remove deployed infrastructure if it was deployed:
+### Remove deployed applications
+
+```
+make k8s-helm-uninstall
+helm uninstall cph-test-db
+```
+
+### Remove deployed infrastructure
 
 ```
 cd infra/terraform
 terraform destroy
 ```
+
+Also check that there are no loadbalancers or persistent volumes left
+behind.
