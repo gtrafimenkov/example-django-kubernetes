@@ -1,5 +1,8 @@
 #!/bin/bash
 #
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2020 Gennady Trafimenkov
+#
 # This is entrypoint script for the application image.
 #
 # One or more of the following commands is required:

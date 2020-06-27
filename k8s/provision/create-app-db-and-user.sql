@@ -1,3 +1,6 @@
+-- SPDX-License-Identifier: MIT
+-- Copyright (c) 2020 Gennady Trafimenkov
+
 CREATE DATABASE cphtest;
 CREATE USER cphtestuser WITH /*ENCRYPTED*/ PASSWORD 'django';
 ALTER ROLE cphtestuser SET client_encoding TO 'utf8';

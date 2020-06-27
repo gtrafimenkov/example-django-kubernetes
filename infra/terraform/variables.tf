@@ -1,3 +1,6 @@
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2020 Gennady Trafimenkov
+
 variable "name" {
   description = "Name for the VPC and EKS cluster"
   default     = "cph-test"

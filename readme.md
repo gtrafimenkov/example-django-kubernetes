@@ -11,9 +11,11 @@
 	- [First install of the application](#first-install-of-the-application)
 	- [Upgrade of the deployed chart](#upgrade-of-the-deployed-chart)
 - [Deploy AWS EKS test cluster](#deploy-aws-eks-test-cluster)
-- [Final works](#final-works)
+- [Final words](#final-words)
 	- [Remove deployed applications](#remove-deployed-applications)
 	- [Remove deployed infrastructure](#remove-deployed-infrastructure)
+- [Consulting](#consulting)
+- [License](#license)
 
 ## Overview
 
@@ -172,3 +174,14 @@ terraform destroy
 
 Also check that there are no loadbalancers or persistent volumes left
 behind.
+
+## Consulting
+
+If you need help with DevOps work,
+don't hesitate to contact gennady.trafimenkov@gmail.com.
+
+## License
+
+- for `todo` folder see [todo/LICENSE](todo/LICENSE)
+- for `project` folder the license is unknown; see https://github.com/shacker/gtd
+- for `docker`, `infra`, `k8s` folders it is MIT

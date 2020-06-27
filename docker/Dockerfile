@@ -1,3 +1,6 @@
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2020 Gennady Trafimenkov
+
 FROM ubuntu:18.04
 
 ENV LC_ALL=C.UTF-8

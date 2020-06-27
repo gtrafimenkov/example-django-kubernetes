@@ -1,3 +1,6 @@
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2020 Gennady Trafimenkov
+
 VERSION := $(shell git describe --dirty --broken)
 
 # If environment variable EXTERNAL_DOCKER_REPO is not defined, using default value

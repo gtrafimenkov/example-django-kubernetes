@@ -1,3 +1,6 @@
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2020 Gennady Trafimenkov
+
 resource "aws_iam_role" "cluster-role" {
   name = "eks-${var.name}-cluster"
 
