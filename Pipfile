@@ -10,7 +10,7 @@ gunicorn = "*"
 factory-boy = "*"
 titlecase = "*"
 bleach = "*"
-django = "==2.2.3"
+django = "==2.2.22"
 
 [dev-packages]
 pylint = "*"
